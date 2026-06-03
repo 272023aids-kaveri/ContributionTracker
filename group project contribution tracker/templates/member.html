@@ -1,0 +1,271 @@
+<!-- templates/member.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Members</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(135deg,#141e30,#243b55);
+            padding:30px;
+        }
+
+        .container{
+            width:500px;
+            background:rgba(255,255,255,0.1);
+            backdrop-filter:blur(10px);
+            padding:35px;
+            border-radius:20px;
+            box-shadow:0 8px 25px rgba(0,0,0,0.3);
+            color:white;
+            text-align:center;
+            animation:fadeIn 1s ease;
+        }
+
+        h1{
+            margin-bottom:20px;
+            font-size:32px;
+            color:#00e6e6;
+        }
+
+        .subtitle{
+            margin-bottom:20px;
+            font-size:15px;
+            color:#ddd;
+        }
+
+        input{
+            width:100%;
+            padding:14px;
+            margin:10px 0;
+            border:none;
+            border-radius:12px;
+            outline:none;
+            font-size:16px;
+        }
+
+        input:focus{
+            border:2px solid #00e6e6;
+        }
+
+        button{
+            width:100%;
+            padding:14px;
+            margin-top:18px;
+            border:none;
+            border-radius:12px;
+            background:#00e6e6;
+            color:#000;
+            font-size:18px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        button:hover{
+            background:#00b3b3;
+            transform:scale(1.03);
+        }
+
+        .icon{
+            font-size:55px;
+            margin-bottom:15px;
+        }
+
+        .member-box{
+            margin-top:20px;
+        }
+
+        .member-card{
+            background:rgba(255,255,255,0.08);
+            padding:15px;
+            border-radius:15px;
+            margin-top:15px;
+        }
+
+        .member-title{
+            font-size:20px;
+            margin-bottom:10px;
+            color:#ffd166;
+        }
+
+        @keyframes fadeIn{
+
+            from{
+                opacity:0;
+                transform:translateY(30px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="icon">👥</div>
+
+        <h1>Add Members</h1>
+
+        <p class="subtitle">
+            Enter Project, Guide and Member Details
+        </p>
+
+        <form method="POST">
+
+            <!-- COLLEGE NAME -->
+
+            <input
+                type="text"
+                name="college_name"
+                placeholder="Enter College Name"
+                required
+            >
+
+            <!-- DEPARTMENT NAME -->
+
+            <input
+                type="text"
+                name="department"
+                placeholder="Enter Department Name"
+                required
+            >
+
+            <!-- PROJECT TITLE -->
+
+            <input
+                type="text"
+                name="project_title"
+                placeholder="Enter Project Title"
+                required
+            >
+
+            <!-- GUIDE NAME -->
+
+            <input
+                type="text"
+                name="guide"
+                placeholder="Enter Guide Name"
+                required
+            >
+
+            <!-- NUMBER OF MEMBERS -->
+
+            <input
+                type="number"
+                id="memberCount"
+                name="memberCount"
+                placeholder="Enter Number of Members"
+                required
+            >
+
+            <!-- CREATE BUTTON -->
+
+            <button
+                type="button"
+                onclick="createInputs()"
+            >
+                Create Member Fields
+            </button>
+
+            <!-- DYNAMIC MEMBER FIELDS -->
+
+            <div
+                id="memberFields"
+                class="member-box"
+            ></div>
+
+            <!-- SUBMIT BUTTON -->
+
+            <button type="submit">
+                Continue →
+            </button>
+
+        </form>
+
+    </div>
+
+<script>
+
+    function createInputs(){
+
+        let count =
+            document.getElementById(
+                "memberCount"
+            ).value;
+
+        let container =
+            document.getElementById(
+                "memberFields"
+            );
+
+        container.innerHTML = "";
+
+        for(let i = 1; i <= count; i++){
+
+            container.innerHTML += `
+
+                <div class="member-card">
+
+                    <div class="member-title">
+                        Member ${i}
+                    </div>
+
+                    <input
+                        type="text"
+                        name="member${i}"
+                        placeholder="Enter Full Name"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        name="prn${i}"
+                        placeholder="Enter PRN Number"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        name="role${i}"
+                        placeholder="Enter Role"
+                        required
+                    >
+
+                </div>
+
+            `;
+        }
+    }
+
+</script>
+
+</body>
+</html>

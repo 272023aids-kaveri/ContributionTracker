@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Contribution Report</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:linear-gradient(135deg,#141e30,#243b55);
+            min-height:100vh;
+            padding:40px;
+            color:white;
+        }
+
+        .container{
+            max-width:1000px;
+            margin:auto;
+            background:rgba(255,255,255,0.1);
+            backdrop-filter:blur(10px);
+            padding:35px;
+            border-radius:25px;
+            box-shadow:0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:10px;
+            color:#00e6e6;
+            font-size:40px;
+        }
+
+        .subtitle{
+            text-align:center;
+            margin-bottom:30px;
+            color:#ddd;
+        }
+
+        .guide{
+            margin-bottom:25px;
+            font-size:20px;
+            color:#ffd166;
+        }
+
+        .report-card{
+            background:rgba(255,255,255,0.08);
+            padding:25px;
+            border-radius:18px;
+            margin-bottom:25px;
+        }
+
+        .member-name{
+            font-size:28px;
+            color:#ffd166;
+            margin-bottom:15px;
+        }
+
+        .info{
+            font-size:18px;
+            margin-bottom:10px;
+            line-height:1.8;
+        }
+
+        .progress-bar{
+            width:100%;
+            height:30px;
+            background:#333;
+            border-radius:20px;
+            overflow:hidden;
+            margin-top:15px;
+        }
+
+        .progress{
+            height:100%;
+            background:#00e6e6;
+            text-align:center;
+            color:black;
+            font-weight:bold;
+            line-height:30px;
+        }
+
+        .summary{
+            margin-top:30px;
+            padding:20px;
+            background:rgba(255,255,255,0.08);
+            border-radius:18px;
+            font-size:20px;
+            line-height:1.8;
+        }
+
+        .btn{
+            display:inline-block;
+            margin-top:30px;
+            padding:14px 25px;
+            background:#ff4d4d;
+            color:white;
+            text-decoration:none;
+            border-radius:12px;
+            font-weight:bold;
+            margin-right:15px;
+        }
+
+        .pdf-btn{
+            background:#00e6e6;
+            color:black;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>
+            📄 AI Contribution Report
+        </h1>
+
+        <p class="subtitle">
+            {{ college_name }}
+        </p>
+
+        <p class="subtitle">
+            {{ department }}
+        </p>
+
+        <div class="guide">
+
+            <b>Guide Name :</b> {{ guide }}
+
+        </div>
+
+        {% for member in members %}
+
+        <div class="report-card">
+
+            <div class="member-name">
+
+                👤 {{ member.name }}
+
+            </div>
+
+            <div class="info">
+
+                <b>PRN :</b>
+                {{ member.prn }}
+
+            </div>
+
+            <div class="info">
+
+                <b>Role :</b>
+                {{ member.role }}
+
+            </div>
+
+            <div class="info">
+
+                Total Contribution Score :
+                <b>{{ contributions[member.name] }}</b>
+
+            </div>
+
+            <div class="info">
+
+                Contribution Percentage :
+                <b>{{ percentages[member.name] }}%</b>
+
+            </div>
+
+            <div class="info">
+
+                Performance Status :
+
+                {% if percentages[member.name] >= 70 %}
+
+                    Excellent ⭐
+
+                {% elif percentages[member.name] >= 40 %}
+
+                    Good ✅
+
+                {% else %}
+
+                    Needs Improvement ⚠️
+
+                {% endif %}
+
+            </div>
+
+            <div class="progress-bar">
+
+                <div class="progress"
+                     style="width: {{ percentages[member.name] }}%;">
+
+                    {{ percentages[member.name] }}%
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+        <div class="summary">
+
+            <b>Total Project Contribution Score :</b>
+
+            {{ total }}
+
+            <br><br>
+
+            This report is generated automatically using AI-based file analysis.
+
+        </div>
+
+        <a href="/dashboard" class="btn">
+
+            ← Back To Dashboard
+
+        </a>
+
+        <a href="#"
+           class="btn pdf-btn"
+           id="downloadPdfBtn"
+           onclick="downloadPDF(event)">
+
+            Download PDF 📥
+
+        </a>
+
+    </div>
+
+<script>
+function downloadPDF(e) {
+    e.preventDefault();
+    var btn = document.getElementById('downloadPdfBtn');
+    btn.textContent = 'Generating...';
+    
+    fetch('/download_pdf')
+        .then(function(response) {
+            return response.blob();
+        })
+        .then(function(blob) {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'AI_Contribution_Report.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            btn.textContent = 'Download PDF 📥';
+        })
+        .catch(function(err) {
+            alert('Error downloading PDF');
+            btn.textContent = 'Download PDF 📥';
+        });
+}
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+﻿__pycache__/
+*.pyc
+env/
+venv/
+uploads/
+Unconfirmed 999037.crdownload
+*.db
+.DS_Store

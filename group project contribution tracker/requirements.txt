@@ -2,3 +2,4 @@ Flask
 python-docx
 PyPDF2
 reportlab
+gunicorn
